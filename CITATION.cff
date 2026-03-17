@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it using the metadata below."
+title: "Hard Limits on Sparse Bioelectric Control"
+type: software
+authors:
+  - family-names: "Cable"
+    given-names: "Chris"
+    email: "cablechriscable@gmail.com"
+repository-code: "https://github.com/cablechris/hard-limits-sparse-bioelectric-control"
+url: "https://github.com/cablechris/hard-limits-sparse-bioelectric-control"
+license: "MIT"
+abstract: >
+  Finite-horizon control theory for gap-junction-coupled tissue repair,
+  focused on minimum actuation rank, spectral controllability, and sparse
+  bioelectric intervention design.
+keywords:
+  - bioelectricity
+  - optimal control
+  - controllability
+  - gap junctions
+  - morphogenesis
+  - tissue repair

@@ -55,6 +55,11 @@ This repo builds that theory on a gap-junction network model with bistable local
 - [docs/results/default-lattice-phase2-baseline.md](docs/results/default-lattice-phase2-baseline.md)
 - [docs/derivations/linear-minimum-energy-control.md](docs/derivations/linear-minimum-energy-control.md)
 
+## Cite and Reuse
+
+- Citation metadata: [CITATION.cff](CITATION.cff)
+- License: [LICENSE](LICENSE)
+
 ## Status
 
 This is an active research repository, not a polished package release.
