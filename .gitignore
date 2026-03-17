@@ -1,0 +1,10 @@
+﻿__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.env
+build/
+dist/
+research/control_gap_junction/results/
+.gpd/traces/
+.gpd/observability/

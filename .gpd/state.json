@@ -1,0 +1,36 @@
+﻿{
+  "project_reference": {
+    "project_md_updated": "2026-03-17",
+    "core_research_question": "For a nonlinear gap-junction tissue network with noise, disorder, and lesion-induced damage, what is the minimum-energy spatiotemporal control input that drives the system from a damaged initial state into the basin of a target healthy morphology, and how does that threshold scale with network size, conductance, noise, and dilution?",
+    "current_focus": "Phase 1: Control-Ready Model Specification"
+  },
+  "position": {
+    "current_phase": "01",
+    "current_phase_name": "Control-Ready Model Specification",
+    "total_phases": 6,
+    "current_plan": null,
+    "total_plans_in_phase": null,
+    "status": "Ready to plan",
+    "last_activity": "2026-03-17",
+    "last_activity_desc": "Bootstrapped new control project from adaptive gap-junction foundation.",
+    "progress_percent": 0
+  },
+  "open_questions": [
+    "What is the cleanest control-input operator: site-local current injection, mode-restricted actuation, or boundary actuation?",
+    "What basin-entry criterion is strict enough to avoid counting transient near-hits as control success?",
+    "Which linearization point is most informative: damaged state, healthy attractor, or driven saddle neighborhood?"
+  ],
+  "decisions": [
+    {
+      "phase": "00",
+      "summary": "Start a separate repository for the control project.",
+      "rationale": "The control problem is scientifically distinct from the parent Lyapunov/correspondence project and deserves its own roadmap and artifact set."
+    }
+  ],
+  "blockers": [],
+  "session": {
+    "last_date": "2026-03-17",
+    "stopped_at": "Project scaffold created; Phase 1 ready to plan.",
+    "resume_file": ".gpd/ROADMAP.md"
+  }
+}

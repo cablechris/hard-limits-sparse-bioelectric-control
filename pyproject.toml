@@ -1,0 +1,15 @@
+﻿[project]
+name = "bioelectric-minimum-energy-control"
+version = "0.1.0"
+description = "GPD project for minimum-energy control of adaptive bioelectric tissues"
+readme = "README.md"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+  "pytest>=9.0.2",
+]
