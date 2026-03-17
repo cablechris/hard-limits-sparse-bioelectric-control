@@ -14,3 +14,8 @@
 - What is the cleanest control-input operator: site-local current injection, mode-restricted actuation, or boundary actuation?
 - What basin-entry criterion is strict enough to avoid counting transient near-hits as control success?
 - Which linearization point is most informative: damaged state, healthy attractor, or driven saddle neighborhood?
+
+**Convention Lock:**
+- Metric signature: not-applicable (nonrelativistic tissue network)
+- Natural units: lattice units
+- Coordinate system: 2D square lattice with nearest-neighbor graph

@@ -44,13 +44,13 @@
 
                        ],
     "convention_lock":  {
-                            "metric_signature":  null,
+                            "metric_signature":  "not-applicable (nonrelativistic tissue network)",
                             "fourier_convention":  null,
-                            "natural_units":  null,
+                            "natural_units":  "lattice units",
                             "gauge_choice":  null,
                             "regularization_scheme":  null,
                             "renormalization_scheme":  null,
-                            "coordinate_system":  null,
+                            "coordinate_system":  "2D square lattice with nearest-neighbor graph",
                             "spin_basis":  null,
                             "state_normalization":  null,
                             "coupling_convention":  null,
