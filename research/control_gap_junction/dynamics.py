@@ -27,6 +27,7 @@ def deterministic_voltage_drift(
     neighbors: dict[int, tuple[int, ...]],
     site_offsets: list[float],
     edge_scales: dict[tuple[int, int], float],
+    site_control: list[float],
 ) -> float:
     voltage = voltages[site]
     coupling = 0.0
@@ -42,6 +43,7 @@ def deterministic_voltage_drift(
         + config.stimulation_amplitude
         - config.injury_amplitude
         + site_offsets[site]
+        + site_control[site]
     ) / config.tau_v
 
 
@@ -67,6 +69,7 @@ def step(
     neighbors: dict[int, tuple[int, ...]],
     site_offsets: list[float],
     edge_scales: dict[tuple[int, int], float],
+    site_control: list[float],
     rng: random.Random,
 ) -> tuple[list[float], list[float], dict[tuple[int, int], float]]:
     next_voltages = list(voltages)
@@ -92,6 +95,7 @@ def step(
             neighbors=neighbors,
             site_offsets=site_offsets,
             edge_scales=edge_scales,
+            site_control=site_control,
         )
         noise = config.noise_amplitude * rng.gauss(0.0, 1.0) * sqrt_dt
         next_voltages[site] = voltage + dt * drift + noise

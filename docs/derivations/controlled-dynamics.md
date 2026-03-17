@@ -184,6 +184,53 @@ if B is not fixed now, the Gramian problem is not fixed now.
 So choosing `B` is not implementation detail. It is part of the mathematical
 statement of the project.
 
+## Default Linearization Target
+
+Phase 2 needs one default operating point, even if later work compares several.
+The default target is:
+
+```text
+damaged pre-intervention snapshot with frozen conductance field
+```
+
+Concretely:
+
+- simulate the lesion/disorder setup with `u(t) = 0`
+- stop at the chosen intervention-start time `t = t_0`
+- set `V_bar = V_damaged(t_0)`
+- set `G_bar = G_damaged(t_0)` and freeze it for the linearized voltage-sector calculation
+- linearize only the voltage dynamics for the finite-horizon steering problem
+
+This is the correct Phase 1 default because:
+
+- it matches the experimental question "given the tissue state after damage, where should I stimulate now?"
+- it defines a local steering problem from the state actually available to intervention
+- it avoids mixing the Phase 2 linearized control problem with the harder bilinear problem of actively steering `G`
+- it keeps the linearization honest: local and finite-horizon, not a claim about global basin geometry
+
+The resulting Phase 2 pair is therefore
+
+```text
+A = (1 / tau_V) dF/dV |_(V_bar = V_damaged(t_0), G_bar = G_damaged(t_0)),
+B_tilde = (1 / tau_V) B,
+```
+
+with `u(t)` acting for `t >= t_0`.
+
+In the code scaffold, the first explicit representation of this object is a
+local frozen-conductance voltage Jacobian evaluated numerically at the stored
+snapshot together with the rescaled actuator matrix `B_tilde = B / tau_V`.
+Those are Phase 1 bookkeeping artifacts, not yet a Phase 2 control solver. The
+current code packages them as a local linearized pair built from one frozen
+simulation snapshot.
+
+Alternative operating points remain scientifically relevant:
+
+- healthy-attractor linearization for target-side sensitivity
+- saddle-neighborhood linearization for basin-boundary geometry
+
+But they are secondary comparisons, not the default Phase 2 baseline.
+
 ## Phase 1 Decision
 
 The project will proceed with this default:
@@ -208,7 +255,7 @@ These are intentionally not fixed in this note:
 
 - basin-entry criterion
 - steering horizon `T`
-- damaged initial state family
+- damaged initial state family beyond the default snapshot convention above
 - target-attractor neighborhood definition
 
 Those depend on the local geometry around the chosen operating point and should

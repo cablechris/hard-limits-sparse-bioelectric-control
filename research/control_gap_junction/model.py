@@ -86,8 +86,24 @@ class ControlSpec:
     actuator_family: ActuatorFamily = ActuatorFamily.SPARSE_SITE
     actuator_nodes: tuple[int, ...] = ()
     mode_vectors: tuple[tuple[float, ...], ...] = ()
+    control_trace: tuple[tuple[float, ...], ...] = ()
     energy_weight: float = 1.0
     amplitude_limit: float | None = None
+
+
+@dataclass(slots=True)
+class LinearizationPoint:
+    voltages: tuple[float, ...]
+    conductances: tuple[tuple[tuple[int, int], float], ...]
+    polarity_field: tuple[float, ...]
+    note: str = "Frozen damaged pre-intervention snapshot for local voltage-sector linearization."
+
+
+@dataclass(slots=True)
+class LinearizedPair:
+    point: LinearizationPoint
+    a_matrix: list[list[float]]
+    b_matrix: list[list[float]]
 
 
 @dataclass(slots=True)

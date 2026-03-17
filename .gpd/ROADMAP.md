@@ -15,6 +15,6 @@
 
 Plans:
 
-- [ ] 01-01: Define the controlled dynamics `dV/dt = F(V,G) + B u(t)` and intervention-energy functional.
-- [ ] 01-02: Define the linearization target `(V_bar, G_bar)` and the resulting `(A, B)` pair for Phase 2.
-- [ ] 01-03: Build the control-ready code scaffold and verification checks.
+- [x] 01-01: Define the controlled dynamics `dV/dt = F(V,G) + B u(t)` and intervention-energy functional.
+- [x] 01-02: Define the default linearization target as a damaged pre-intervention snapshot `(V_bar, G_bar)` with frozen conductance field, and record the resulting `(A, B)` pair for Phase 2.
+- [x] 01-03: Build the control-ready code scaffold and verification checks.
