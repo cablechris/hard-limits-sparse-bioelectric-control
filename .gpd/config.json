@@ -1,11 +1,10 @@
-﻿{
-  "autonomy": "standard",
-  "research_mode": "default",
-  "workflow": {
-    "research": true,
-    "plan_checker": true,
-    "verifier": true,
-    "verify_between_waves": true
-  },
-  "model_profile": "balanced"
+{
+    "autonomy":  "balanced",
+    "research_mode":  "balanced",
+    "workflow":  {
+                     "research":  true,
+                     "plan_checker":  true,
+                     "verifier":  true
+                 },
+    "model_profile":  "numerical"
 }
