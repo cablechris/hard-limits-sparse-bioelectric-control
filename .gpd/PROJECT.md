@@ -28,6 +28,8 @@ For a nonlinear gap-junction tissue network with noise, disorder, and lesion-ind
 ## Constraints
 
 - Keep the control objective explicit. Do not blur basin steering with vague "repair" language.
+- Default control geometry is additive site-local voltage forcing: `dV/dt = F(V,G) + B u(t)`.
+- The default actuator family is sparse site control; full-site control is retained only as a lower-bound benchmark.
 - Treat quenched bond dilution as the disorder model when comparing against octanol-style blockade.
 - Distinguish exact linearized control results from nonlinear numerical steering results.
 - Do not claim metastable control memory unless the post-control basin structure is demonstrated.

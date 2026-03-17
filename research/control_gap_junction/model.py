@@ -15,6 +15,17 @@ class InitialConditionKind(StrEnum):
     ANTERIOR_POSTERIOR = "anterior_posterior"
 
 
+class ControlMode(StrEnum):
+    NONE = "none"
+    ADDITIVE_VOLTAGE = "additive_voltage"
+
+
+class ActuatorFamily(StrEnum):
+    FULL_SITE = "full_site"
+    SPARSE_SITE = "sparse_site"
+    MODE_RESTRICTED = "mode_restricted"
+
+
 class MacrostateKind(StrEnum):
     WT = "wt"
     CRYPTIC = "cryptic"
@@ -70,6 +81,16 @@ class PolarityFieldSpec:
 
 
 @dataclass(slots=True)
+class ControlSpec:
+    mode: ControlMode = ControlMode.ADDITIVE_VOLTAGE
+    actuator_family: ActuatorFamily = ActuatorFamily.SPARSE_SITE
+    actuator_nodes: tuple[int, ...] = ()
+    mode_vectors: tuple[tuple[float, ...], ...] = ()
+    energy_weight: float = 1.0
+    amplitude_limit: float | None = None
+
+
+@dataclass(slots=True)
 class SimulationConfig:
     lattice_size: int = 16
     tau_v: float = 1.0
@@ -91,6 +112,7 @@ class SimulationConfig:
     lesion: LesionSpec = field(default_factory=LesionSpec)
     plasticity: PlasticitySpec = field(default_factory=PlasticitySpec)
     polarity_field: PolarityFieldSpec = field(default_factory=PolarityFieldSpec)
+    control: ControlSpec = field(default_factory=ControlSpec)
 
     @property
     def epsilon(self) -> float:

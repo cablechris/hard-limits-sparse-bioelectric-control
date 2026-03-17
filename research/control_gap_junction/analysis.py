@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 from .dynamics import deterministic_voltage_drift
 from .initialization import build_polarity_target
-from .model import MacrostateKind, SimulationConfig
+from .model import ActuatorFamily, ControlMode, MacrostateKind, SimulationConfig
 from .morphology import extract_morphology_features
 
 
@@ -99,6 +99,20 @@ def _orthonormalize(vectors: list[list[float]], tolerance: float = 1e-12) -> lis
         if norm > tolerance:
             basis.append([value / norm for value in working])
     return basis
+
+
+def default_sparse_actuator_nodes(config: SimulationConfig) -> tuple[int, ...]:
+    """Return a compact default sparse-site actuator set near the lattice midline."""
+    size = config.lattice_size
+    if size < 2:
+        return (0,)
+    center_row = size // 2
+    left_col = max(0, size // 2 - 1)
+    right_col = min(size - 1, left_col + 1)
+    return (
+        center_row * size + left_col,
+        center_row * size + right_col,
+    )
 
 
 def first_ap_mode_laplacian_eigenvalue(lattice_size: int) -> float:
@@ -487,6 +501,53 @@ def weighted_laplacian_matrix(
         matrix[i][j] -= weight
         matrix[j][i] -= weight
     return matrix
+
+
+def control_operator_matrix(config: SimulationConfig) -> list[list[float]]:
+    """Build the additive actuator matrix B for the current control specification."""
+    node_count = config.lattice_size * config.lattice_size
+    if config.control.mode == ControlMode.NONE:
+        return []
+    if config.control.mode != ControlMode.ADDITIVE_VOLTAGE:
+        raise ValueError(f"Unsupported control mode: {config.control.mode}")
+
+    if config.control.actuator_family == ActuatorFamily.FULL_SITE:
+        return [
+            [1.0 if row == col else 0.0 for col in range(node_count)]
+            for row in range(node_count)
+        ]
+
+    if config.control.actuator_family == ActuatorFamily.SPARSE_SITE:
+        nodes = config.control.actuator_nodes or default_sparse_actuator_nodes(config)
+        columns: list[list[float]] = []
+        for node in nodes:
+            column = [0.0 for _ in range(node_count)]
+            column[node] = 1.0
+            columns.append(column)
+        return [
+            [column[row] for column in columns]
+            for row in range(node_count)
+        ]
+
+    if config.control.actuator_family == ActuatorFamily.MODE_RESTRICTED:
+        if not config.control.mode_vectors:
+            raise ValueError("mode_restricted control requires explicit mode_vectors")
+        if any(len(vector) != node_count for vector in config.control.mode_vectors):
+            raise ValueError("every mode vector must have length equal to the state dimension")
+        return [
+            [vector[row] for vector in config.control.mode_vectors]
+            for row in range(node_count)
+        ]
+
+    raise ValueError(f"Unsupported actuator family: {config.control.actuator_family}")
+
+
+def control_energy(control_trace: list[list[float]], dt: float, energy_weight: float = 1.0) -> float:
+    """Quadratic intervention energy integral approximated by a time sum."""
+    total = 0.0
+    for control in control_trace:
+        total += sum(value * value for value in control)
+    return energy_weight * dt * total
 
 
 def static_ap_drive_vector(config: SimulationConfig, amplitude: float | None = None) -> list[float]:
