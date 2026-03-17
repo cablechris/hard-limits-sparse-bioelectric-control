@@ -8,6 +8,8 @@ This repository studies a simple but experimentally relevant question:
 
 The central result is that this is not just an energy question. In the frozen linearized control problem, there are damage geometries for which **no amount of control energy works below a critical actuator count** because part of the damage lies outside the controllable subspace.
 
+![8x8 actuation-rank threshold figure](docs/results/threshold-figure-8x8.svg)
+
 ## Why This Repo Exists
 
 Bioelectric medicine has good tools and weak design rules. Experimentalists can perturb voltage with optogenetics, ion-channel drugs, and electrodes, but there is still no compact quantitative theory that says:
